@@ -1,0 +1,36 @@
+				<?php
+					$allowupdate = 0;
+					$allowdelete = 0;
+					$allowpost = 0;
+				?>
+				<!--{hook post_list_inc_start.htm}-->
+
+				<?php if($postlist) { foreach($postlist as $_post) {
+
+				?>
+					<li class="media post" data-rid="<?php echo $_post['rid'];?>" data-uid="<?php echo $_post['uid'];?>">
+						<a href="<?php echo url("user-$_post[uid]");?>" class="mr-3" tabindex="-1">
+							<img class="avatar-3" src="./view/img/avatar.png">
+						</a>
+						<div class="media-body">
+							<div class="d-flex justify-content-between small text-muted">
+								<div>
+									<span class="username">
+										<a href="<?php echo url("user-$_post[uid]");?>" class="text-muted font-weight-bold"><?php echo $_post['username'];?></a>
+									</span>
+									<span class="date text-grey ml-2"><?php echo $_post['dateline'];?></span>
+								</div>
+								<div class="text-right text-grey">
+									<?php if($_post['floor']) { ?>
+									<span class="floor-parent">
+										<span class="floor mr-0"><?php echo $_post['floor'];?></span><?php echo lang('floor');?>
+									</span>
+									<?php } ?>
+								</div>
+							</div>
+							<div class="message mt-1 break-all">
+								<?php echo $_post['r_content'];?>
+							</div>
+						</div>
+					</li>
+				<?php }} ?>

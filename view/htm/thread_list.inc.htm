@@ -1,0 +1,26 @@
+<!--{hook thread_list_inc_start.htm}-->
+
+<?php if($threadlist) { foreach($threadlist as &$_thread) { ?>
+<li class="media thread tap " data-href="<?php echo url("
+    thread-$_thread[cid]");?>" data-tid="<?php echo $_thread['cid'];?>">
+
+<a href="<?php echo url("user-$_thread[authorid]");?>" tabindex="-1" class="ml-1 mt-1 mr-3">
+<img class="avatar-3" src="./view/img/avatar.png">
+</a>
+
+<div class="media-body">
+    <div class="subject break-all">
+        <a href="<?php echo url("thread-$_thread[cid]");?>"><?php echo $_thread['title'];?></a>
+    </div>
+    <div class="d-flex justify-content-between small mt-1">
+        <div class="text-muted small">
+            <span class="ml-2"><i class="icon-comment-o"></i> <?php echo $_thread['replies'];?></span>
+        </div>
+    </div>
+</div>
+</li>
+<?php }} else { ?>
+<li>
+    <div><?php echo lang('none');?></div>
+</li>
+<?php } ?>

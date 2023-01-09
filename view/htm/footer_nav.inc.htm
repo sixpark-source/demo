@@ -1,0 +1,17 @@
+<footer class="text-muted small bg-dark py-4 mt-3" id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<!--{hook footer_footer_left_start.htm}-->
+				Powered by <a href="https://www.6park.com/" target="_blank" class="text-muted"><b>6park.com </b></a>
+				<!--{hook footer_footer_left_end.htm}-->
+			</div>
+			<div class="col text-right">
+				<!--{hook footer_footer_right_start.htm}-->
+				Processed: <b><?php echo substr(microtime(1) - $starttime, 0, 5);?></b>, SQL: <b><?php echo count($db->sqls);?></b>
+				<!--{hook footer_footer_right_end.htm}-->
+				<a href="/?mod-cleancache" target="_blank" style="color:red;margin-left:25px;">清空页面缓存</a>
+			</div>
+		</div>
+	</div>
+</footer>
