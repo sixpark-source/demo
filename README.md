@@ -1,6 +1,6 @@
 #### 留园网Demo说明
 1. 获取代码
-`git pull https://github.com/sixpark-source/demo.git`
+`git clone https://github.com/sixpark-source/demo.git`
 
 2. 上传代码到您的服务器的web目录下，
 3. 在服务器上创建一个 Mysql的 数据库
