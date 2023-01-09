@@ -28,4 +28,8 @@
 
 3.<font color="red">特别注意，每次修改程序和模板文件后，需要清空 tmp目录下的所有文件，否则修改不生效</font>
 
+#### <a href="https://github.com/sixpark-source/OAuth2/blob/master/Doc/Auth2.0%E6%8E%A5%E5%8F%A3%E6%8C%87%E5%8D%97.md">留园Auth2.0文档说明</a>
+
+#### <a href="https://github.com/sixpark-source/OAuth2/blob/master/Doc/%E8%B5%84%E6%BA%90%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3.md">留园资源获取文档指南</a>
+
 
