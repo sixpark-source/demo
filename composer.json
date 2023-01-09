@@ -1,0 +1,5 @@
+{
+    "require": {
+        "sixpark-source/oauth2": "^2.1"
+    }
+}
