@@ -11,6 +11,11 @@ $grouplist = group_list_cache();
 $uid = intval(_SESSION('uid'));
 empty($uid) and $uid = user_token_get() and $_SESSION['uid'] = $uid;
 $user = user_read($uid);
+if(empty($user))
+{
+    unset($_SESSION['uid']);
+    $uid = 0;
+}
 $gid = empty($user) ? 0 : intval($user['gid']);
 $group = isset($grouplist[$gid]) ? $grouplist[$gid] : $grouplist[0];
 // 版块 / Forum
