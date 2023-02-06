@@ -16,13 +16,43 @@ if(empty($action)) {
 
         $_uid = param(1, 0);
         empty($_uid) AND $_uid = $uid;
-        $_user = user_read($_uid);
+        $_user = user_read_api($_uid);
 
-	empty($_user) AND message(-1, lang('user_not_exists'));
+		empty($_user) AND message(-1, lang('user_not_exists'));
 
         $header['title'] = $_user['username'];
         $header['mobile_title'] = $_user['username'];
+		$isSelf = 0;
+		if(!empty($uid))
+		{
+			if($uid == $_uid)
+			{
+				$isSelf = 1;
+			}
+			else{
+				$isFollow = 0;
+				$isBlack = 0;
+				$loginUser = user_read_api($uid);
+				foreach($loginUser['follow_list'] as $item)
+				{
+					if($_uid == $item['uid'])
+					{
+						$isFollow = 1;
+						break;
+					}
+				}
 
+				foreach($loginUser['black_list'] as $item)
+				{
+					if($_uid == $item['uid'])
+					{
+						$isBlack = 1;
+						$isFollow = 0;
+						break;
+					}
+				}
+			}
+		}
         // hook user_index_end.php
 
 	include _include(APP_PATH.'view/htm/user.htm');
@@ -33,19 +63,33 @@ if(empty($action)) {
 
         $_uid = param(2, 0);
         empty($_uid) AND $_uid = $uid;
-        $_user = user_read($_uid);
-
+        $_user = user_read_api($_uid);
         empty($_user) AND message(-1, lang('user_not_exists'));
         $header['title'] = $_user['username'];
         $header['mobile_title'] = $_user['username'];
 
         $page = param(3, 1);
-        $pagesize = 20;
-        $totalnum = $_user['threads'];
-        $pagination = pagination(url("user-thread-$_uid-{page}"), $totalnum, $page, $pagesize);
-        $threadlist = mythread_find_by_uid($_uid, $page, $pagesize);
-        thread_list_access_filter($threadlist, $gid);
 
+		$apiHTTP = new \SixparkSource\Oauth2\HTTPRequest($auth_config);
+		//楼主前期帖子
+		$bbsIdAry = [];
+		foreach ($forumlist_show as $item) {
+			$bbsIdAry[] = $item['fid'];
+		}
+		$limit = 30;
+		$offset = ($page - 1) * $limit;
+		$dataPost = [
+			'uid' => $_uid,
+			'bbsid' => implode(',', $bbsIdAry),
+			'offset' => $offset,
+			'limit' => $limit,
+		];
+		$userThreadJson = $apiHTTP->postWithAuth($auth_config['resource_host']."/index.php?app=index&act=userthread",$dataPost);
+		$userThreadData =  json_decode($userThreadJson,true);
+
+		$threadlist = $userThreadData['threadlist'];
+		$totalnum = 300;
+		$pagination = pagination(url("user-thread-$_uid-{page}"), 300, $page, $limit);
         // hook user_thread_end.php
 
 	include _include(APP_PATH.'view/htm/user_thread.htm');
@@ -416,7 +460,33 @@ if(empty($action)) {
 		http_location($url);
 	}
 
-} else {
+}
+else if($action == 'userdo')
+{
+	$do = param('do');
+	if(!in_array($do,['dofollow','doblack']))
+	{
+		die('{"error":"action error!!!"}');
+	}
+	if(empty($uid))
+	{
+		die('{"error":"Please Login"}');
+	}
+	$toUid = param("uid");
+	if($toUid < 1)
+	{
+		die('{"error":"Uid is null"}');
+	}
+	$post = [
+		'token'=>$user['token'],
+		'uid' => $toUid,
+		'do' => 'add'
+	];
+	$apiHTTP = new \SixparkSource\Oauth2\HTTPRequest($auth_config);
+	$userDo = $apiHTTP->postWithAuth($auth_config['resource_host']."/index.php?app=user&act=".$do,$post);
+	die('{"success":"ok"}');
+}
+else {
 
 }
 

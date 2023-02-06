@@ -41,11 +41,16 @@ if($action == 'create') {
         }
 
         //发布帖子
+        //上级贴
+        if(empty($quotepid)){
+            $quotepid = param('quotepid', '0', FALSE);
+        }
         $postData = [
             'bbsid' => $fid,
             'cid' => $tid,
             'token' => $user['token'],
             'subject' => $subject,
+            'uprid' => intval($quotepid),
             'content' => $message
         ];
         $apiHTTP = new \SixparkSource\Oauth2\HTTPRequest($auth_config);

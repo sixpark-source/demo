@@ -1,26 +1,84 @@
-<!--{hook thread_list_inc_start.htm}-->
-
-<?php if($threadlist) { foreach($threadlist as &$_thread) { ?>
-<li class="media thread tap " data-href="<?php echo url("
-    thread-$_thread[cid]");?>" data-tid="<?php echo $_thread['cid'];?>">
-
-<a href="<?php echo url("user-$_thread[authorid]");?>" tabindex="-1" class="ml-1 mt-1 mr-3">
-<img class="avatar-3" src="./view/img/avatar.png">
-</a>
-
-<div class="media-body">
-    <div class="subject break-all">
-        <a href="<?php echo url("thread-$_thread[cid]");?>"><?php echo $_thread['title'];?></a>
+<style type="text/css">
+    .spic{width:100px;max-height:60px;overflow: hidden;}
+</style>
+<?php
+    if(!empty($threadlist)){
+        foreach($threadlist as &$_thread) {
+    ?>
+<li class="media thread tap " data-href="<?php echo url("thread-$_thread[cid]");?>" data-tid="<?php echo $_thread['cid'];?>">
+    <a href="<?php echo url("user-$_thread[authorid]");?>" tabindex="-1" class="ml-1 mt-1 mr-3">
+        <img class="avatar-3" src="https://face.popo8.com/getface.php?uid=<?=$_thread['authorid']?>">
+    </a>
+    <?php
+    if(!empty($_thread['pic_src']))
+    {
+    ?>
+    <div class="spic ml-1 mt-1 mr-3">
+        <a href="thread-21436.htm"><img src="<?=$_thread['pic_src'][0]?>" width="100"></a>
     </div>
-    <div class="d-flex justify-content-between small mt-1">
-        <div class="text-muted small">
-            <span class="ml-2"><i class="icon-comment-o"></i> <?php echo $_thread['replies'];?></span>
+    <?php
+    }
+    ?>
+
+    <div class="media-body">
+        <div class="subject break-all">
+            <a href="<?php echo url("thread-$_thread[cid]");?>"><?php echo $_thread['title'];?></a>
+        </div>
+        <div class="d-flex justify-content-between small mt-1">
+            <div>
+                <?php
+                if(empty($fid))
+                {
+                echo '<a href="/?forum-'.$_thread['bbsid'].'.htm" class="badge badge-pill badge-info" style="line-height: 14px;">'.$_thread['sitename'].'</a>';
+                }
+                ?>
+                <span class="haya-post-info-username ">
+                    <span class="username text-grey mr-1 " uid="163"><?=$_thread['src']?></span>
+                    <span class="date text-grey"><?=date("Y-m-d",$_thread['dateline'])?></span>
+                </span>
+            </div>
+            <div class="text-muted small">
+                <a href="<?=url("thread-$_thread[cid]")?>">
+                <?php
+                if(!empty($_thread['views']))
+                {
+                ?>
+                <span class="ml-2"><i class="icon-eye"></i> <?=$_thread['views']?></span>
+                <?php
+                }
+                ?>
+                <?php
+                if(!empty($_thread['likes']))
+                {
+                ?>
+                <span class="ml-2"><i class="icon-thumbs-o-up"></i> <?=$_thread['likes']?></span>
+                <?php
+                }
+                ?>
+                <?php
+                if(!empty($_thread['replies']))
+                {
+                ?>
+                <span class="ml-2"><i class="icon-comment-o"></i> </i> <?=$_thread['replies']?></span>
+                <?php
+                }
+                ?>
+                </a>
+            </div>
         </div>
     </div>
-</div>
 </li>
-<?php }} else { ?>
+<?php
+        }
+    }
+    else{
+    ?>
 <li>
     <div><?php echo lang('none');?></div>
 </li>
-<?php } ?>
+    <?php
+    }
+?>
+
+
+

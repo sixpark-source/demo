@@ -1,5 +1,4 @@
 <?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
-
 <div class="row">
 	<div class="col-lg-9 main">
 		<?php if(empty($hide_breadcrumb)) { ?>
@@ -28,7 +27,6 @@
 								<?php }?>
 								<span class="date text-grey ml-2"><?php echo date("Y-m-d",$thread['dateline']);?></span>
 								<span class="text-grey ml-2"><i class="icon-eye"></i> <?php echo $thread['views'];?></span>
-								
 							</div>
 						</div>
 					</div>
@@ -38,12 +36,20 @@
 					<?php echo $thread['content'];?>
 				</div>
 				<div class="plugin d-flex justify-content-center mt-3">
+					<div class="haya-post-like px-1">
+						<span class="btn-group" role="group">
+							<button class="btn btn-outline-secondary js-haya-post-like-thread-add" data-pid="<?php echo $thread['cid'];?>" title="点赞本帖">
+								<i class="icon icon-thumbs-o-up" aria-label="点赞本帖"></i>
+								<span class="haya-post-like-thread-btn">点赞</span>
+							</button>
+							<button class="btn btn-outline-secondary" title="点赞数量" data-tid="<?php echo $thread['cid'];?>">
+								<span class="haya-post-like-thread-user-count"><?php echo intval($thread['likes']); ?></span>
+							</button>
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
-		
-		
-		
 		<div class="card card-postlist">
 			<div class="card-body">
 				<div class="card-title">
@@ -103,7 +109,19 @@
 		
 		
 		<div class="d-none threadlist"><input type="checkbox" name="modtid" value="<?php echo $thread['tid']; ?>" checked /></div>
-		<?php include _include(APP_PATH.'view/htm/thread_list_mod.inc.htm');?>
+		<?php if(!empty($thread['isManager']) && $thread['isManager'] == 1) { ?>
+		<div class="text-center">
+			<div class="btn-group mod-button my-3" role="group" aria-label="">
+				<button class="btn btn-secondary delete" data-modal-url="<?php echo url("mod-delete");?>" data-modal-title="<?php echo lang('delete');?>" data-modal-arg=".threadlist" data-modal-size="md">删除</button>
+				<!--<button class="btn btn-secondary top" data-modal-url="<?php echo url("mod-top");?>" data-modal-title="<?php echo lang('top');?>" data-modal-arg=".threadlist" data-modal-size="md">禁言</button> -->
+			</div>
+		</div>
+		<?php } ?>
+
+
+
+
+
 		<a role="button" class="btn btn-secondary btn-block xn-back col-lg-6 mx-auto mb-3" href="javascript:history.back();"><?php echo lang('back');?></a>
 		
 	</div>
@@ -117,13 +135,80 @@
 					<img class="avatar-5" src="./view/img/avatar.png">
 				</a>
 				<h5><a href="javascript:void(null)"><?php echo $thread['user']['username'];?></a></h5>
+				<hr>
+				<h6>性别：<?=empty($thread['user']['sex'])?'未知':$thread['user']['sex']?></h6>
+				<h6><?=$thread['user']['grade'];?></h6>
+				<h6><?=$thread['user']['views'];?> 阅读</h6>
+				<h6><?=$thread['user']['replies'];?> 评论</h6>
+			</div>
+			<div class="m-3 text-center">
+				<?php
+				if($isFollow == 1)
+				{
+				?>
+				<button type="button" class="btn btn-success" user-data="<?=$thread['user']['uid']?>">已关注</button>
+				<?php
+				}
+				else{
+				?>
+				<button type="button" class="btn btn-success btn-follow" user-data="<?=$thread['user']['uid']?>">+ 关注Ta</button>
+				<?php
+				}
+				?>
+				&nbsp;&nbsp;
+				<?php
+				if($isBlack == 1)
+				{
+				?>
+				<button type="button" class="btn btn-danger" user-data="<?=$thread['user']['uid']?>">已拉黑</button>
+				<?php
+				}
+				else{
+				?>
+				<button type="button" class="btn btn-danger btn-black" user-data="<?=$thread['user']['uid']?>">拉黑Ta</button>
+				<?php
+				}
+				?>
 			</div>
 		</div>
-		
+
+		<div class="card userRecentThread" style="top:0px">
+			<h6 class="card-header">楼主前期主贴 </h6>
+			<div class="card-body py-3" style="padding:1rem;font-size:12px;line-height:25px;overflow: hidden;text-overflow: ellipsis;">
+				<?php
+			foreach($userThread as $hot){
+			?>
+				<span class="line-height-2">
+					<span class="text-grey">•</span>&nbsp;<a href="/?thread-<?=$hot['cid']?>.htm">
+					<?=$hot['title']?>
+					<br></a>
+				</span>
+				<?php
+			}
+			?>
+			</div>
+		</div>
+
+		<div class="card userRecentThread" style="top:0px">
+			<h6 class="card-header">栏目热帖 </h6>
+			<div class="card-body py-3" style="padding:1rem;font-size:12px;line-height:25px;overflow: hidden;text-overflow: ellipsis;">
+				<?php
+			foreach($hotview as $hot){
+			?>
+				<span class="line-height-2">
+					<span class="icon-eye"></span>&nbsp;<a href="/?thread-<?=$hot['cid']?>.htm">
+					<?=$hot['title']?>
+					<span class="ml-2 badge badge-pill badge-info"><?=$hot['views']?></span><br></a>
+				</span>
+				<?php
+			}
+			?>
+			</div>
+		</div>
+
 	</div>
 </div>
 <?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
-
 <script>
 var jform = $('#quick_reply_form');
 var jsubmit = $('#submit');
@@ -204,7 +289,92 @@ $(function() {
 var jmessage = $('#message');
 jmessage.on('focus', function() {if(jmessage.t) { clearTimeout(jmessage.t); jmessage.t = null; } jmessage.css('height', '8rem'); });
 jmessage.on('blur', function() {jmessage.t = setTimeout(function() { jmessage.css('height', '2.5rem');}, 1000); });
-
 $('li[data-active="fid-<?php echo $fid;?>"]').addClass('active');
-
 </script>
+<!--点赞的逻辑-->
+<script>
+	$(document).on('click', '.js-haya-post-like-thread-add', function() {
+		$(this).attr("disabled", "disabled");
+		var thiz = $(this);
+		var pid = thiz.attr("data-pid");
+		var url = '?thread-dolike.htm';
+		$.xpost(url, {'pid': pid}, function(code, msg){
+			thiz.removeClass('js-haya-post-like-thread-add')
+					.addClass('js-haya-post-like-thread-del')
+					.attr('title', '取消点赞');
+
+			thiz.find(".icon").removeClass('icon-thumbs-o-up')
+					.addClass('icon-thumbs-up')
+					.attr("aria-label", '取消点赞');
+
+			thiz.find(".haya-post-like-thread-btn")
+					.text('已赞');
+			var _newCount = parseInt($(".haya-post-like-thread-user-count").text()) + 1;
+			$(".haya-post-like-thread-user-count").text(_newCount);
+
+			thiz.removeAttr("disabled");
+		});
+	});
+	$(document).on('click', '.js-haya-post-like-thread-del', function() {
+		$(this).attr("disabled", "disabled");
+
+		var thiz = $(this);
+		var pid = thiz.attr("data-pid");
+		var url = '?thread-dolike.htm';
+		$.xpost(url, {'pid': pid}, function(code, msg) {
+			thiz.removeClass('js-haya-post-like-thread-del')
+					.addClass('js-haya-post-like-thread-add')
+					.attr('title', '点赞本帖');
+
+			thiz.find(".icon").removeClass('icon-thumbs-up')
+					.addClass('icon-thumbs-o-up')
+					.attr("aria-label", '点赞本帖');
+
+			thiz.find(".haya-post-like-thread-btn")
+					.text('点赞');
+
+			//$(".haya-post-like-thread-user-count").text(msg.count);
+			var _newCount = parseInt($(".haya-post-like-thread-user-count").text()) - 1;
+			$(".haya-post-like-thread-user-count").text(_newCount);
+
+			thiz.removeAttr("disabled");
+		});
+	});
+	<?php
+	if($uid >0)
+	{
+		?>
+		$(".btn-follow").bind('click',function(){
+			var _toUid = $(this).attr("user-data");
+			$(this).removeClass('btn-follow');
+			$(this).html("已关注");
+			url = '?user-userdo.htm&do=dofollow';
+			$.xpost(url, {'uid': _toUid}, function(code, msg) {
+				console.log(msg);
+			});
+		})
+		$(".btn-black").bind('click',function(){
+			var _toUid = $(this).attr("user-data");
+			$(this).removeClass('btn-black');
+			$(this).html("已拉黑");
+			url = '?user-userdo.htm&do=doblack';
+			$.xpost(url, {'uid': _toUid}, function(code, msg) {
+				console.log(msg);
+			});
+		})
+	<?php
+	}
+	else{
+		?>
+		$(".btn-follow").bind('click',function(){
+			alert("请登录后再试");
+		})
+
+		$(".btn-black").bind('click',function(){
+			alert("请登录后再试");
+		})
+	<?php
+	}
+		?>
+</script>
+<!--点赞的JS-->

@@ -156,9 +156,16 @@ function thread_inc_views($tid, $n = 1) {
 }
 
 function thread_read($tid) {
-    global $auth_config;
+    global $auth_config,$uid,$user;
     $apiHTTP = new \SixparkSource\Oauth2\HTTPRequest($auth_config);
-    $viewJson = $apiHTTP->postWithAuth($auth_config['resource_host']."/index.php?app=index&act=view",['cid' => $tid]);
+    if($uid > 0)
+    {
+        $post = ['token'=>$user['token'],'cid' => $tid];
+    }
+    else{
+        $post = ['cid' => $tid];
+    }
+    $viewJson = $apiHTTP->postWithAuth($auth_config['resource_host']."/index.php?app=index&act=view",$post);
     $view = json_decode($viewJson,true);
     return $view['view'];
 }

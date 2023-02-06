@@ -5,28 +5,56 @@
 				<img class="logo-4" src="<?php echo $_user['avatar_url'];?>">
 				<br><b><?php echo $_user['username'];?> </b>
 				<!--{hook user_profile_username_after.htm}-->
+				<?php
+			if($isSelf == 0){
+			?>
+				<div class="m-3 text-center">
+					<?php
+				if($isFollow == 1)
+				{
+				?>
+					<button type="button" class="btn btn-success" user-data="<?=$_uid?>">已关注</button>
+					<?php
+				}
+				else{
+				?>
+					<button type="button" class="btn btn-success btn-follow" user-data="<?=$_uid?>">+ 关注Ta</button>
+					<?php
+				}
+				?>
+					<br>
+					<?php
+				if($isBlack == 1)
+				{
+				?>
+					<button type="button" class="btn btn-danger" user-data="<?=$_uid?>">已拉黑</button>
+					<?php
+				}
+				else{
+				?>
+					<button type="button" class="btn btn-danger btn-black" user-data="<?=$_uid?>">拉黑Ta</button>
+					<?php
+				}
+				?>
+				</div>
+				<?php
+			}
+			?>
 			</div>
 			<div class="col-4 col-sm-5">
-				<span class="text-muted"><?php echo lang('threads');?>：</span><?php echo $_user['threads'];?>
-				<br><span class="text-muted"><?php echo lang('posts');?>：</span><?php echo $_user['posts'];?>
+				<span class="text-muted">性别：</span><?=empty($_user['sex'])?'未知':$_user['sex']?>
+				<br><span class="text-muted">等级：</span><?php echo $_user['grade'];?>
 				<!--{hook user_profile_posts_after.htm}-->
 			</div>
 			<div class="col-auto">
-				<span class="text-muted"><?php echo lang('user_group');?>：</span><?php echo $_user['groupname'];?>
-				<br><span class="text-muted"><?php echo lang('create_date');?>：</span><?php echo $_user['create_date_fmt'];?>
-				<br><span class="text-muted"><?php echo lang('last_login_date');?>：</span><?php echo $_user['login_date_fmt'];?>
-				<?php if($gid == 1) { ?>
-				<br><span class="text-danger"><?php echo lang('email');?>：</span><?php echo $_user['email'];?><br>
-				<?php } ?>
-				
+				<span class="text-muted">浏览数：</span><?php echo $_user['views'];?>
+				<br><span class="text-muted">评论数：</span><?php echo $_user['replies'];?>
 				<!--{hook user_profile_login_date_after.htm}-->
 			</div>
+
+
 		</div>
-		
-		<?php if(!empty($group['allowdeleteuser'])) { ?>
-			<a role="button" class="btn btn-danger confirm btn-block my-3" data-confirm-text="<?php echo lang('confirm_delete_user');?>" data-method="post" href="<?php echo url("mod-deleteuser-$_user[uid]");?>"><?php echo lang('delete_user');?></a>
-		<?php } ?>
-		
+
 		<!--{hook user_index_delete_user_button_after.htm}-->
 		
 	</slot>
@@ -34,4 +62,40 @@
 
 <script>
 $('a[data-active="user-profile"]').addClass('active');
+<?php
+if($uid >0)
+{
+			?>
+	$(".btn-follow").bind('click',function(){
+		var _toUid = $(this).attr("user-data");
+		$(this).removeClass('btn-follow');
+		$(this).html("已关注");
+		url = '?user-userdo.htm&do=dofollow';
+		$.xpost(url, {'uid': _toUid}, function(code, msg) {
+			console.log(msg);
+		});
+	})
+	$(".btn-black").bind('click',function(){
+		var _toUid = $(this).attr("user-data");
+		$(this).removeClass('btn-black');
+		$(this).html("已拉黑");
+		url = '?user-userdo.htm&do=doblack';
+		$.xpost(url, {'uid': _toUid}, function(code, msg) {
+			console.log(msg);
+		});
+	})
+	<?php
+}
+else{
+			?>
+	$(".btn-follow").bind('click',function(){
+		alert("请登录后再试");
+	})
+
+	$(".btn-black").bind('click',function(){
+		alert("请登录后再试");
+	})
+	<?php
+}
+		?>
 </script>

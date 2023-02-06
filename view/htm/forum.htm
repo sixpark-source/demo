@@ -1,7 +1,28 @@
 <?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
 
 <!--{hook forum_start.htm}-->
-
+<style>
+	/*
+    box-shadow: 0 0 5px red;
+    */
+	@keyframes xndigest {
+		0% { color: red; text-shadow: 0 0 3px #FF8D8D;}
+		20% { color: orange; text-shadow: 0 0 3px #FFE1AD;}
+		40% { color: green; text-shadow: 0 0 3px #B3FFAF;}
+		65% { color: blue; text-shadow: 0 0 3px #AFE4FF;}
+		80% { color: purple; text-shadow: 0 0 3px #FFC9F3;}
+		100% { color: red; text-shadow: 0 0 3px #FF8D8D;}
+	}
+	i.icon-digest-1 {  text-shadow: 0 0 3px #AFE4FF; }
+	i.icon-digest-2 {  text-shadow: 0 0 3px #FFF177; }
+	i.icon-digest-3 {  text-shadow: 0 0 3px #FF8D8D; }
+	.icon-digest-1:before { content: "\f219";  color: #5BC0DE;} /* "\f0a5" */
+	.icon-digest-2:before { content: "\f219";  color: #ECA541;}
+	.icon-digest-3:before { content: "\f219"; color: #D53D38;}
+	.icon-digest-3:afteer { content: "精"; color: #D53D38;}
+	/*右边的头像列表*/
+	.col-xs-4 {float: left;width: 25%;}
+</style>
 <div class="row">
 	<div class="col-lg-9 main">
 		<!--{hook forum_breadcrumb_before.htm}-->
@@ -20,27 +41,31 @@
 					<li class="nav-item">
 						<a class="nav-link <?php echo $active == 'default' ? 'active' : '';?>" href="<?php echo url("forum-$fid");?>"><?php echo lang('new_thread');?></a>
 					</li>
+					<?php if($fid != 64){?>
+					<li class="nav-item">
+						<a class="nav-link <?php echo $active == 'digest' ? 'active' : '';?>" href="<?php echo url("forum-$fid");?>?digest=1">本版精华贴<i class="icon-digest-2 icon-1x hidden-sm" aria-hidden="true" title="精华"></i></a>
+					</li>
+					<?php }?>
 					<!--{hook forum_thread_list_nav_item_after.htm}-->
 				</ul>
 				<!--{hook forum_thread_list_dropdown_before.htm}-->
 				<div class="text-right text-small pt-1 card-header-dropdown">
 					<div class="btn-toolbar" role="toolbar">
-						<span class="text-muted"><?php echo lang('orderby');?>：</span>
-						<div class="dropdown btn-group">
-							<a href="#" class="dropdown-toggle" id="ordery_dropdown_menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							    <?php echo $orderby == 'tid' ? lang('thread_create_date') : lang('post_create_date');?>
-								<!--{hook forum_thread_list_dropdown_toggle.htm}-->
-							</a>
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="ordery_dropdown_menu">
-							    <a class="dropdown-item" href="<?php echo url("forum-$fid-1", array('orderby'=>'tid') + $extra);?>"><i class="icon text-primary <?php echo $orderby == 'tid' ? 'icon-check' : '';?>"></i>&nbsp; <?php echo lang('thread_create_date');?></a>
-							    <a class="dropdown-item" href="<?php echo url("forum-$fid-1", array('orderby'=>'lastpid') + $extra);?>"><i class="icon text-primary <?php echo $orderby == 'lastpid' ? 'icon-check' : '';?>"></i>&nbsp; <?php echo lang('post_create_date');?></a>
-							    <!--{hook forum_thread_list_dropdown_menu.htm}-->
-							</div>
-						</div>
+
 					</div>
 				</div>
 				<!--{hook forum_thread_list_dropdown_after.htm}-->
 			</div>
+		<?php
+			if(!empty($picList) && $picList == true){
+			?>
+		<!--开始图片列表的展示-->
+			<?php include _include(APP_PATH.'view/htm/thread_list_pic.inc.htm');?>
+		<!--开始图片列表的展示结束-->
+			<?php
+			}
+			else{
+			?>
 			<div class="card-body">
 				<ul class="list-unstyled threadlist mb-0">
 					<!--{hook forum_threadlist_before.htm}-->
@@ -48,6 +73,9 @@
 					<!--{hook forum_threadlist_after.htm}-->
 				</ul>
 			</div>
+			<?php
+			}
+		?>
 		</div>
 
 		<?php include _include(APP_PATH.'view/htm/thread_list_mod.inc.htm');?>
@@ -65,29 +93,74 @@
 				<img class="logo-5 mb-2" src="<?php echo $forum['icon_url'];?>">
 				<h5><?php echo $forum['name'];?></h5>
 				<!--{hook forum_brief_before.htm}-->
-				<div class="text-left line-height-2"></div>
+				<div class="text-left line-height-2"><?=$bbsInfo['info']['info']?></div>
+				<hr>
+				<div class="text-left line-height-2">
+					版主：
+					<?php
+					if(empty($bbsInfo['info']['manager']))
+					{
+						echo "无";
+					}
+					else{
+						?>
+					<div class="card-body small" style="padding: 0.5rem;">
+					<?php
+					foreach($bbsInfo['info']['manager'] as $manager){
+					?>
+						<div class="col-xs-4 text-center mb-3">
+							<a class="tt" href="?user-<?=$manager['uid']?>.htm" data-toggle="tooltip" title="周羽鹤">
+								<img src="https://face.popo8.com/getface.php?uid=<?=$manager['uid']?>" alt="<?=$manager['username']?>" width="39" height="39" class="img-circle"><br>
+								<?=$manager['username']?></a>
+						</div>
+					<?php
+					}
+					?>
+					</div>
+						<?php
+					}
+					?>
+				</div>
 				<!--{hook forum_brief_after.htm}-->
 			</div>
-			<div class="card-footer p-2">
-				<table class="w-100 small">
-					<tr align="center">
-						<td>
-							<span class="text-muted"><?php echo lang('threads');?></span><br>
-							<b><?php echo $forum['threads'];?></b>
-						</td>
-						<td>
-							<span class="text-muted"><?php echo lang('today_posts');?></span><br>
-							<b><?php echo $forum['todayposts'];?></b>
-						</td>
-						<td>
-							<span class="text-muted"><?php echo lang('today_threads');?></span><br>
-							<b><?php echo $forum['todaythreads'];?></b>
-						</td>
-						<!--{hook forum_todaythreads_after.htm}-->
-					</tr>
-				</table>
+		</div>
+
+		<div class="card userRecentThread" style="top:0px">
+			<h6 class="card-header">72小时阅读榜 </h6>
+			<div class="card-body py-3" style="padding:1rem;font-size:12px;line-height:25px;overflow: hidden;text-overflow: ellipsis;">
+				<?php
+			foreach($hotview as $hot){
+			?>
+				<span class="line-height-2">
+					<span class="icon-eye"></span>&nbsp;<a href="/?thread-<?=$hot['cid']?>.htm">
+					<?=$hot['title']?>
+					<span class="ml-2 badge badge-pill badge-info"><?=$hot['views']?></span><br></a>
+				</span>
+				<?php
+			}
+			?>
 			</div>
 		</div>
+
+		<div class="card userRecentThread" style="top:0px">
+			<h6 class="card-header">72小时热评榜 </h6>
+			<div class="card-body py-3" style="padding:1rem;font-size:12px;line-height:25px;overflow: hidden;text-overflow: ellipsis;">
+				<?php
+			foreach($hostList as $hot){
+			?>
+				<span class="line-height-2">
+					<span class="icon-comment-o"></span>&nbsp;<a href="/?thread-<?=$hot['cid']?>.htm">
+					<?=$hot['title']?>
+					<span class="ml-2 badge badge-pill badge-info"><?=$hot['replies']?> 评</span><br></a>
+				</span>
+				<?php
+			}
+			?>
+			</div>
+		</div>
+
+
+
 		
 		<!--{hook forum_mod_before.htm}-->
 		<?php if($forum['announcement'] || $forum['modlist']) { ?>

@@ -25,6 +25,12 @@ function user__update($uid, $update) {
 function user__read($uid) {
 	// hook model_user__read_start.php
 	$user = db_find_one('user', array('uid'=>$uid));
+    if(empty($user))
+    {
+
+
+
+    }
 	// hook model_user__read_end.php
 	return $user;
 }
@@ -62,18 +68,52 @@ function user_update($uid, $arr) {
 	return $r;
 }
 
+function user_read_api($uid) {
+    global $g_static_users,$auth_config;
+    if(empty($uid)) return array();
+    $uid = intval($uid);
+    // hook model_user_read_start.php
+    $apiHTTP = new \SixparkSource\Oauth2\HTTPRequest($auth_config);
+    $dataPost = [
+        'uid' => $uid
+    ];
+    $threadAuthorJson = $apiHTTP->postWithAuth($auth_config['resource_host']."/index.php?app=user&act=showuser",$dataPost);
+    $threadUserData =  json_decode($threadAuthorJson,true);
+    if(!empty($threadUserData['info']))
+        //user_format($user);
+        $user['uid']   = $threadUserData['info']['uid'];
+        $user['username'] = $threadUserData['info']['username'];
+        $user['sex']    = $threadUserData['info']['sex'];
+        $user['grade'] = $threadUserData['info']['grade'];
+        $user['replies'] = $threadUserData['info']['replies'];
+        $user['follows'] =$threadUserData['info']['follows'];
+        $user['blacks'] =$threadUserData['info']['blacks'];
+        $user['follow_list'] =$threadUserData['info']['follow_list'];
+        $user['black_list'] =$threadUserData['info']['black_list'];
+        $user['views'] =$threadUserData['info']['views'];
+        $user['threads'] = 0;
+        $user['posts'] = 0;
+        $user['gid'] = 0;
+        $user['avatar_url'] = 'https://face.popo8.com/getface.php?uid='.$uid;
+        $user['avatar_path'] = 'https://face.popo8.com/getface.php?uid='.$uid;
+        $user['online_status'] = 0;
+        $g_static_users[$uid] = $user;
+    // hook model_user_read_end.php
+    return $user;
+}
+
 function user_read($uid) {
-	global $g_static_users;
-	if(empty($uid)) return array();
-	$uid = intval($uid);
-	// hook model_user_read_start.php
-	//$user = user__read($uid);
+    global $g_static_users;
+    if(empty($uid)) return array();
+    $uid = intval($uid);
+    // hook model_user_read_start.php
+    //$user = user__read($uid);
     $user = db_sql_find_one("select * from bbs_user_auth where uid=".$uid);
     if($user['expires'] < time())
     {
         return [];
     }
-	//user_format($user);
+    //user_format($user);
     $user['create_ip_fmt']   = "";
     $user['create_date_fmt'] = "";
     $user['login_ip_fmt']    = "";
@@ -84,9 +124,9 @@ function user_read($uid) {
     $user['avatar_url'] = 'view/img/avatar.png';
     $user['avatar_path'] = 'view/img/avatar.png';
     $user['online_status'] = 1;
-	$g_static_users[$uid] = $user;
-	// hook model_user_read_end.php
-	return $user;
+    $g_static_users[$uid] = $user;
+    // hook model_user_read_end.php
+    return $user;
 }
 
 
