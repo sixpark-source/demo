@@ -6,7 +6,7 @@
 `git clone https://github.com/sixpark-source/demo.git`
 5. 上传代码到您的服务器的web目录下，
 6. 使用域名访问这个web目录下的资源，默认情况下，系统会自动进入安装状态。
-<img src="./doc_resouce/db.png">
+<img src="https://github.com/sixpark-source/demo/blob/main/doc_resource/db.png">
 7. 完成安装，则系统自动进入网站。
 
 
