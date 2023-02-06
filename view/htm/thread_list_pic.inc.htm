@@ -1,0 +1,71 @@
+<style type="text/css">
+
+    .card-header .padding5{padding:5px;display: block;
+        float: left;
+        margin-bottom: 5px;}
+    .top_span_white {
+        background: white;
+        border-radius: 2px;
+        color: red;
+        margin-right: 5px;
+        padding: 0 5px;
+    }
+    .top_span_red {
+        background: #c40000 none repeat scroll 0 0;
+        border-radius: 2px;
+        color: #fff;
+        margin-right: 5px;
+        padding: 0 5px;
+    }
+    .top_span_red a{color:white;}
+    .top_span_white a{color:red;}
+</style>
+<div class="card card-threadlist">
+    <style>
+        .hot_pic{
+            float:left;
+            padding:5px;
+            display:block;
+
+        }
+        .hot_pic p.image-container {
+            width: 100%;
+            height: 0;
+            padding-bottom: 60%;
+            overflow: hidden;
+            border:1px solid rgba(0, 0, 0, 0.125);
+        }
+        .hot_pic p.image-container img {
+            width: 100%;
+        }
+        .thread-video-title{
+            overflow: hidden;
+            height:38px;
+        }
+    </style>
+    <div class="card-body p-1">
+        <?php
+            foreach($threadlist as $_thread){
+                if(empty($_thread['pic_src'])){continue;}
+                if(time() - $_thread['dateline'] < 86400)
+                {
+                    $isToday = true;
+                }
+                else{
+                    $isToday = false;
+                }
+            ?>
+        <a class="col-6 col-lg-3 hot_pic " href="<?php echo url("thread-$_thread[cid]");?>">
+        <p class="image-container">
+            <img src="<?=$_thread['pic_src'][0]?>" class="align-items-center">
+        </p>
+        <p class="thread-video-title"><?php if($isToday){ echo '<span class="top_span_red">今日发布</span>'; } echo mb_substr($_thread['title'],0,19,'utf-8'); ?></p>
+        </a>
+        <?php
+        }
+        ?>
+    </div>
+</div>
+
+
+
