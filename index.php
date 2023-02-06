@@ -1,9 +1,15 @@
 <?php
-define('DEBUG', 1);
+define('DEBUG', 0);
 define('APP_PATH', dirname(__FILE__).'/'); // __DIR__
 !defined('ADMIN_PATH') AND define('ADMIN_PATH', APP_PATH.'admin/');
 !defined('XIUNOPHP_PATH') AND define('XIUNOPHP_PATH', APP_PATH.'xiunophp/');
-$conf = (@include APP_PATH.'conf/conf.php') OR exit('<script>window.location="install/"</script>');
+if(!file_exists(APP_PATH.'conf/conf.php'))
+{
+    exit('<script>window.location="install/"</script>');
+}
+else{
+    $conf=include APP_PATH.'conf/conf.php';
+}
 // 兼容 4.0.3 的配置文件	
 !isset($conf['user_create_on']) AND $conf['user_create_on'] = 1;
 !isset($conf['logo_mobile_url']) AND $conf['logo_mobile_url'] = 'view/img/logo.png';

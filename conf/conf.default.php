@@ -66,9 +66,9 @@ return array (
 	'logo_pc_url' => 'view/img/logo.png',			// PC 的 LOGO URL
 	'logo_water_url' => 'view/img/water-small.png',		// 水印的 LOGO URL
 	
-	'sitename' => 'Xiuno BBS',
-	'sitebrief' => 'Site Brief',
-	'timezone' => 'Asia/Shanghai',	// 时区，默认中国
+	'sitename' => '留园开放平台Demo',
+	'sitebrief' => '留园开放平台Demo',
+	'timezone' => 'America/Chicago',	// 时区，默认中国
 	'lang' => 'zh-cn',
 	'runlevel' => 5,		// 0: 站点关闭; 1: 管理员可读写; 2: 会员可读;  3: 会员可读写; 4：所有人只读; 5: 所有人可读写
 	'runlevel_reason' => 'The site is under maintenance, please visit later.',
