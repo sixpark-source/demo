@@ -1,4 +1,4 @@
-<?php if($thread['isManager'] == 1) { ?>
+<?php if(!empty($thread) && $thread['isManager'] == 1) { ?>
 <div class="text-center">
 	<?php if(param(0) != 'thread') { ?>
 	<label class="mr-3">

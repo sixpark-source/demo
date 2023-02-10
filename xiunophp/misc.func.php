@@ -1194,7 +1194,7 @@ function xn_copy($src, $dest) {
 }
 
 function xn_mkdir($dir, $mod = NULL, $recusive = NULL) {
-	$r = !is_dir($dir) ? mkdir($dir, $mod, $recusive) : FALSE;
+	$r = !is_dir($dir) ? mkdir($dir, $mod, true) : FALSE;
 	return $r;
 }
 
