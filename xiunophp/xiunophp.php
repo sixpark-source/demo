@@ -17,7 +17,14 @@
 function_exists('ini_set') AND ini_set('display_errors', DEBUG ? '1' : '0');
 error_reporting(DEBUG ? E_ALL : 0);
 version_compare(PHP_VERSION, '5.3.0', '<') AND set_magic_quotes_runtime(0);
-$get_magic_quotes_gpc = get_magic_quotes_gpc();
+if(substr(PHP_VERSION,0,1) == 5)
+{
+    $get_magic_quotes_gpc = get_magic_quotes_gpc();
+}
+else{
+    $get_magic_quotes_gpc = false;
+}
+
 $starttime = microtime(1);
 $time = time();
 
