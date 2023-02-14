@@ -53,7 +53,7 @@ if($action == 'receiveAuthorizationCode')
                 if($dbResult)
                 {
                     $_SESSION['uid'] = $user_info['info']['uid'];
-                    header("Location:/index.php");
+                    header("Location:index.php");
                 }
                 else{
                     die("用户信息错误，请重新授权");
