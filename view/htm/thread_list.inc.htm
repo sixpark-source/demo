@@ -14,7 +14,7 @@
     {
     ?>
     <div class="spic ml-1 mt-1 mr-3">
-        <a href="thread-21436.htm"><img src="<?=$_thread['pic_src'][0]?>" width="100"></a>
+        <a href="<?php echo url("thread-$_thread[cid]");?>"><img src="<?=$_thread['pic_src'][0]?>" width="100"></a>
     </div>
     <?php
     }
