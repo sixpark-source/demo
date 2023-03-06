@@ -194,6 +194,7 @@ if(empty($action)) {
 
 		// 初始化
 		copy(APP_PATH.'conf/conf.default.php', APP_PATH.'conf/conf.php');
+		copy(APP_PATH.'conf/conf.auth.default.php', APP_PATH.'conf/conf.auth.php');
 
 		// 管理员密码
 		$salt = xn_rand(16);
