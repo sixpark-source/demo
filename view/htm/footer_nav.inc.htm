@@ -4,6 +4,14 @@
 			<div class="col">
 				<!--{hook footer_footer_left_start.htm}-->
 				Powered by <a href="https://www.6park.com/" target="_blank" class="text-muted"><b>6park.com </b></a>
+				<?php
+				if(!empty($site_auth_info['uid']))
+				{
+					?>
+				&nbsp;&nbsp;<a href="https://home.6park.com/index.php?app=home&act=chatnew&uname=<?=base64_encode($site_auth_info['uid'])?>" target="_blank">联系站长</a>
+					<?php
+				}
+				?>
 				<!--{hook footer_footer_left_end.htm}-->
 			</div>
 			<div class="col text-right">

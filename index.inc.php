@@ -21,6 +21,7 @@ $group = isset($grouplist[$gid]) ? $grouplist[$gid] : $grouplist[0];
 // 版块 / Forum
 $fid = 0;
 $forumlist = forum_list_cache();
+$site_auth_info = [];
 $forumlist_show = forum_list_access_filter($forumlist, $gid);    // 有权限查看的板块 / filter no permission forum
 $forumarr = arrlist_key_values($forumlist_show, 'fid', 'name');
 // 头部 header.inc.htm 

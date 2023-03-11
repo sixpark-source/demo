@@ -155,7 +155,7 @@ function forum_list_cache_delete() {
 
 // 对 $forumlist 权限过滤，查看权限没有，则隐藏
 function forum_list_access_filter($forumlist, $gid, $allow = 'allowread') {
-    global $conf, $grouplist,$auth_config;
+    global $conf, $grouplist,$auth_config,$site_auth_info;
     $apiHTTP = new \SixparkSource\Oauth2\HTTPRequest($auth_config);
     $bbsListJson = $apiHTTP->postWithAuth($auth_config['resource_host']."/index.php?app=index&act=bbslist",[]);
     $bbs_list = json_decode($bbsListJson,true);
@@ -182,6 +182,9 @@ function forum_list_access_filter($forumlist, $gid, $allow = 'allowread') {
         $forum['modlist'] = [];
         $forumlist_show[$item['bbsid']] = $forum;
     }
+    //增加站长信息
+    $site_auth_info['uid'] = $bbs_list['site_auth_uid'];
+    $site_auth_info['username'] = $bbs_list['site_auth_username'];
     return $forumlist_show;
 
 
