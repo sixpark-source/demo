@@ -30,16 +30,9 @@ if($action == 'create') {
 		
 		// hook post_post_start.php
 		$message = param('message', '', FALSE);
-		empty($message) AND message('message', lang('please_input_message'));
+        $subject = param('subject','',FALSE);
+		empty($subject) AND message('subject', "标题不能为空");
 		xn_strlen($message) > 2028000 AND message('message', lang('message_too_long'));
-        if(empty($_POST['subject']))
-        {
-            $subject = mb_substr(strip_tags($message),0,20,'utf-8');
-        }
-        else{
-            $subject = strip_tags($_POST['subject']);
-        }
-
         //发布帖子
         //上级贴
         if(empty($quotepid)){
