@@ -14,7 +14,7 @@ if(DEBUG < 3) {
 	if($gid != 1) {
 		setcookie('bbs_sid', '', $time - 86400);
 		//http_403();
-		http_location(url('../user-login'));
+		http_location(url('../user-adminlogin'));
 	}
 	
 	// 管理员令牌检查 / check admin token
