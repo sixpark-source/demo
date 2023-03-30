@@ -2,8 +2,30 @@
     .spic{width:100px;max-height:60px;overflow: hidden;}
 </style>
 <?php
+$adShow = 1;
+?>
+<!--{hook thread_list_inc_start.htm}-->
+<?php
     if(!empty($threadlist)){
+
         foreach($threadlist as &$_thread) {
+        //广告代码
+        if($page == 1 && $adShow==1 && mt_rand(1,5) == 3)
+        {
+        $adShow = 0;
+        ?>
+        <li class="media thread tap " data-href="<?php echo url("thread-$_thread[cid]");?>" data-tid="<?php echo $_thread['cid'];?>">
+            <a href="<?php echo url("user-$_thread[authorid]");?>" tabindex="-1" class="ml-1 mt-1 mr-3">
+            <img class="avatar-3" src="https://face.popo8.com/getface.php?uid=<?=$_thread['authorid']?>">
+            </a>
+            <div class="media-body">
+                <div class="subject break-all">
+                    <a href="?index-1-app.htm" target="_blank">留园社区官方手机客户端下载，更快更便捷！</a>
+                </div>
+            </div>
+        </li>
+        <?
+        }
     ?>
 <li class="media thread tap " data-href="<?php echo url("thread-$_thread[cid]");?>" data-tid="<?php echo $_thread['cid'];?>">
     <a href="<?php echo url("user-$_thread[authorid]");?>" tabindex="-1" class="ml-1 mt-1 mr-3">

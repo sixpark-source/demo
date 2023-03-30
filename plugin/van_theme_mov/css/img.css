@@ -1,0 +1,13 @@
+.spic{width:100%;overflow:hidden;display:flex;background-color:#000;border-radius:0.25rem;}
+.threadlist .thread{width:24%;background-color:#fff;padding:0.25rem;border:1px solid rgba(0, 0, 0, 0.125);margin-top:1rem;border-radius:0.25rem;flex-direction:column;margin:0.25rem;display:block;}
+.thread > .media-body{padding:0.5rem;border-radius:0.25rem;}
+.threadlist .media-body .d-flex{}
+.list_message{display:none}
+.thread > .media-body > .d-flex > div > span{display:none}
+@media (max-width: 800px){
+.threadlist .thread	{width:31% !important}
+
+}
+@media (max-width: 500px){
+.threadlist .thread	{width:48%;}
+}

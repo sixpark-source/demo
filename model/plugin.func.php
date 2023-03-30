@@ -240,7 +240,7 @@ function plugin_unstall($dir) {
 	global $plugins;
 	
 	if(!isset($plugins[$dir])) {
-		return TRUE;
+		//return TRUE;
 	}
 	
 	$plugins[$dir]['installed'] = 0;

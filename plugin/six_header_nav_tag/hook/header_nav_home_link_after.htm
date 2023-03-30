@@ -1,0 +1,14 @@
+<?php
+
+$tagConfig = APP_PATH."/plugin/six_header_nav_tag/tag.json";
+if(file_exists($tagConfig))
+{
+    $tagAry = json_decode(file_get_contents($tagConfig),true);
+}
+if(empty($tagAry))
+{
+    $tagAry = [];
+}
+$forumlist_show_tmp = $forumlist_show; //临时保存一下这个板块列表
+$forumlist_show = $tagAry;
+?>

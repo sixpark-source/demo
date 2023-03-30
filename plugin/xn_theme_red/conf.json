@@ -1,0 +1,10 @@
+{
+    "name": "红色风格",
+    "brief": "红色风格",
+    "version": "1.1",
+    "bbs_version": "4.0",
+    "installed": 0,
+    "enable": 0,
+    "hooks_rank": [],
+    "dependencies": []
+}

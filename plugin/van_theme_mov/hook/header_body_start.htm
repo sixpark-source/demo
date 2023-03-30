@@ -1,0 +1,38 @@
+<script type="text/javascript">
+    function jumpnav(){
+        var cd = document.getElementById("fnlinav");
+        if (cd.style.display=="none"){
+            cd.style.display = "block";
+        }else{
+            cd.style.display = "none";
+        }
+    }
+    </script>
+    <div class="fnli">
+		<div class="fnlichild">
+			<a class="fn_ico" href="javascript:viod(0)" onclick="jumpnav()" style="display:block;color: #8a3f40;font-size: 19px;"><i class="icon-list icon"></i></a>
+		<!--{hook header_nav_nav_fixed.htm}-->
+		</div>
+	</div>
+    <div class="fnnav fnnav-gate" id="fnlinav" style="display:none;"><ul>
+		<li class="fnlstyle" fid="0"><a class="nav-link" href="."><i class="icon-home d-md-none"></i> <?php echo lang('index_page');?></a></li>
+        <?php foreach($forumlist_show as $_forum) { ?>
+        <li class="fnlstyle" fid="<?php echo $_forum['fid'];?>">
+        <a class="nav-link" href="<?php echo url("forum-$_forum[fid]");?>"><i class="icon-circle-o d-md-none" style="margin-right:0.5rem"></i><?php echo $_forum['name'];?></a>
+        </li>
+        <?php } ?>
+				<!--{hook header_nav_user_start.htm}-->
+	<?php if(empty($uid)) { ?>
+		<li class="fnlstyle"><a class="nav-link"href="<?php echo url('user-login');?>"><i class="icon-user"></i> <?php echo lang('login');?></a></li>
+		<!--<li class="fnlstyle"><a class="nav-link"href="<?php echo url('user-create');?>"><?php echo lang('register');?></a></li>-->
+	<?php } else { ?>
+		<li class="fnlstyle username"><a class="nav-link"href="<?php echo url('my');?>"><img class="avatar-1" src="<?php echo $user['avatar_url'];?>"> <?php echo $user['username'];?></a></li>
+		<!-- 管理员 -->
+		<?php if($gid == 1) { ?>
+		<li class="fnlstyle"><a class="nav-link" href="admin/"><i class="icon-home"></i> <?php echo lang('admin_page');?></a></li>
+		<?php } ?>
+		<!--{hook header_nav_admin_page_after.htm}-->
+		<li class="fnlstyle"><a class="nav-link" href="<?php echo url('user-logout');?>"><i class="icon-sign-out"></i> <?php echo lang('logout');?></a></li>
+	<?php } ?>
+		<!--{hook header_nav_user_end.htm}-->
+    </ul></div>

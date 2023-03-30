@@ -1,0 +1,5 @@
+.spic{height:12rem;width:9rem;overflow:hidden;display:flex;align-items:center;background-color:#efefef;border:1px solid rgba(0, 0, 0, 0.125);}
+.threadlist .thread{width:100%;background-color:#fff;padding:0.5rem;border:1px solid rgba(0, 0, 0, 0.125);margin-top:1rem;border-radius:0.25rem;}
+.thread > .media-body{height:12rem;display:flex;flex-direction:column;padding:0.5rem;border-radius:0.25rem;position:relative;}
+.threadlist .media-body .d-flex{}
+.list_message{height:7.5rem;background-color:fdfdfd;position:absolute;bottom:0;overflow:hidden;}

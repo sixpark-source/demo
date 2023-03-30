@@ -34,14 +34,13 @@
 		</ol>
 		<?php } ?>
 		<!--{hook forum_breadcrumb_after.htm}-->
-				
 		<div class="card card-threadlist">
 			<div class="card-header d-flex justify-content-between">
 				<ul class="nav nav-tabs card-header-tabs">
 					<li class="nav-item">
 						<a class="nav-link <?php echo $active == 'default' ? 'active' : '';?>" href="<?php echo url("forum-$fid");?>"><?php echo lang('new_thread');?></a>
 					</li>
-					<?php if($fid != 64){?>
+					<?php if($fid != 64 && empty($tag)){?>
 					<li class="nav-item">
 						<a class="nav-link <?php echo $active == 'digest' ? 'active' : '';?>" href="<?php echo url("forum-$fid");?>?digest=1">本版精华贴<i class="icon-digest-2 icon-1x hidden-sm" aria-hidden="true" title="精华"></i></a>
 					</li>
@@ -56,9 +55,10 @@
 				</div>
 				<!--{hook forum_thread_list_dropdown_after.htm}-->
 			</div>
+			<!--{hook forum_threadlist_pic_before.htm}-->
 		<?php
 			if(!empty($picList) && $picList == true){
-			?>
+		?>
 		<!--开始图片列表的展示-->
 			<?php include _include(APP_PATH.'view/htm/thread_list_pic.inc.htm');?>
 		<!--开始图片列表的展示结束-->

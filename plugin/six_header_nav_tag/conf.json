@@ -1,0 +1,10 @@
+{
+    "name": "分类导航条",
+    "brief": "sixpark出品，用于将导航条切换成使用tag标签筛选数据的链接,注意tag标签的配置在 这个文件里面 <br>plugin/six_header_nav_tag/tag.json<br>json格式手动修改",
+    "version": "1.0",
+    "bbs_version": "4.0",
+    "installed": 0,
+    "enable": 0,
+    "hooks_rank": [],
+    "dependencies": []
+}

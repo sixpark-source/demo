@@ -62,7 +62,6 @@ var jform = $('#form');
 var jsubmit = $('#submit');
 var jemail = $('#email');
 var jpassword = $('#password');
-var referer = '<?php echo $referer;?>';
 jform.on('submit', function() {
 	jform.reset();
 	jsubmit.button('loading');
@@ -70,7 +69,7 @@ jform.on('submit', function() {
 	postdata.password = $.md5(postdata.password);
 	$.xpost(jform.attr('action'), postdata, function(code, message) {
 		if(code == 0) {
-			jsubmit.button(message).delay(1000).location(referer);
+			jsubmit.button(message).delay(1000).location("./admin/");
 		} else if(xn.is_number(code)) {
 			alert(message);
 			jsubmit.button('reset');

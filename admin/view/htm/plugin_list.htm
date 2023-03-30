@@ -82,7 +82,7 @@
 								<?php } ?>
 								
 								<?php if($plugin['installed']) { ?>
-								<a role="button" class="btn btn-danger btn-sm unstall confirm" data-confirm-text="<?php echo lang('plugin_unstall_confirm_tips', array('name'=>$plugin['name']));?>" href="<?php echo url("plugin-unstall-$dir"); ?>"><?php echo lang('unstall');?></a>
+								<a role="button" class="btn btn-danger btn-sm unstall "  href="<?php echo url("plugin-unstall-$dir"); ?>"><?php echo lang('unstall');?></a>
 								<?php } ?>
 								
 								<?php if($plugin['have_upgrade']) { ?>

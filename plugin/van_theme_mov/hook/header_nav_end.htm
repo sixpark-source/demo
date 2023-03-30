@@ -1,0 +1,62 @@
+<!--替换字样lang('keyword')-->
+<div id="new">
+    <div class="sec-head">
+        <div class=new-head>
+            <div class="new-logo">
+                <a href="<?php echo $header['mobile_link'];?>"><img src="plugin/van_theme_mov/images/logo.png"></a>
+            </div>
+            <div class="new-search">
+                <form action="<?php echo url('search');?>" id="search_form">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="<?php echo lang('keyword');?>"
+                               name="keyword">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit"><?php echo lang('search');?></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="new-nav" id="float_banner">
+        <ul class="navbar-nav">
+            <li class="nav-item home" fid="0"><a class="nav-link" href="."><i
+                    class="icon-home d-md-none"></i> <?php echo lang('index_page');?></a></li>
+            <!--{hook header_nav_home_link_after.htm}-->
+            <?php foreach($forumlist_show as $_forum) { ?>
+            <!--{hook header_nav_forumlist_loop_start.htm}-->
+            <li class="nav-item" fid="<?php echo $_forum['fid'];?>">
+                <a class="nav-link" href="<?php echo url(" forum-$_forum[fid]");?>"><i
+                    class="icon-circle-o d-md-none"></i> <?php echo $_forum['name'];?></a>
+            </li>
+            <!--{hook header_nav_forumlist_loop_end.htm}-->
+            <?php } ?>
+        </ul>
+
+    </div>
+    <script type="text/javascript">
+        var IO = document.getElementById('float_banner'), Y = IO, H = 0, IE6;
+        IE6 = window.ActiveXObject && !window.XMLHttpRequest;
+        while (Y) {
+            H += Y.offsetTop;
+            Y = Y.offsetParent
+        }
+        ;
+        if (IE6)
+            IO.style.cssText = "position:absolute;top:expression(this.fix?(document" +
+                ".documentElement.scrollTop-(this.javascript||" + H + ")):0)";
+        window.onscroll = function () {
+            var d = document, s = Math.max(d.documentElement.scrollTop, document.body.scrollTop);
+            if (s > H && IO.fix || s <= H && !IO.fix) return;
+            if (!IE6) IO.style.position = IO.fix ? "" : "fixed"; //针对悬浮至顶部后，做相应的样式更改
+            IO.fix = !IO.fix;
+        };
+        try {
+            document.execCommand("BackgroundImageCache", false, true)
+        } catch (e) {
+        }
+        ;
+        //]]>
+    </script>
+</div>

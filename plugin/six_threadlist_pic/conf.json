@@ -1,0 +1,10 @@
+{
+    "name": "图片帖子列表",
+    "brief": "以图片列表的方式显示帖子列表，注意这个不能和视频模板同事使用，有冲突",
+    "version": "1.0",
+    "bbs_version": "4.0",
+    "installed": 0,
+    "enable": 0,
+    "hooks_rank": [],
+    "dependencies": []
+}

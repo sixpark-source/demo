@@ -107,26 +107,37 @@ function user_read($uid) {
     if(empty($uid)) return array();
     $uid = intval($uid);
     // hook model_user_read_start.php
-    //$user = user__read($uid);
-    $user = db_sql_find_one("select * from bbs_user_auth where uid=".$uid);
-    if($user['expires'] < time())
+    if($uid == 1)
     {
-        return [];
+        // hook model_user_read_start.php
+        $user = user__read($uid);
+        user_format($user);
+        $g_static_users[$uid] = $user;
+        // hook model_user_read_end.php
+        return $user;
     }
-    //user_format($user);
-    $user['create_ip_fmt']   = "";
-    $user['create_date_fmt'] = "";
-    $user['login_ip_fmt']    = "";
-    $user['login_date_fmt'] = "";
-    $user['groupname'] = "";
-    $user['avatar'] ='';
-    $user['gid'] = 0;
-    $user['avatar_url'] = 'view/img/avatar.png';
-    $user['avatar_path'] = 'view/img/avatar.png';
-    $user['online_status'] = 1;
-    $g_static_users[$uid] = $user;
-    // hook model_user_read_end.php
-    return $user;
+    else{
+        //$user = user__read($uid);
+        $user = db_sql_find_one("select * from bbs_user_auth where uid=".$uid);
+        if($user['expires'] < time())
+        {
+            return [];
+        }
+        //user_format($user);
+        $user['create_ip_fmt']   = "";
+        $user['create_date_fmt'] = "";
+        $user['login_ip_fmt']    = "";
+        $user['login_date_fmt'] = "";
+        $user['groupname'] = "";
+        $user['avatar'] ='';
+        $user['gid'] = 0;
+        $user['avatar_url'] = 'view/img/avatar.png';
+        $user['avatar_path'] = 'view/img/avatar.png';
+        $user['online_status'] = 1;
+        $g_static_users[$uid] = $user;
+        // hook model_user_read_end.php
+        return $user;
+    }
 }
 
 

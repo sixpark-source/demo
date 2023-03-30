@@ -1,6 +1,6 @@
 <?php
 
-return array(
+/*return array(
 	'setting' => array(
 		'url'=>url('setting-base'), 
 		'text'=>lang('setting'), 
@@ -53,6 +53,26 @@ return array(
 			'official_fee'=>array('url'=>url('plugin-official_fee'), 'text'=>lang('admin_plugin_official_fee_list')),
 		)
 	)
+);*/
+
+
+return array(
+    'other' => array(
+        'url'=>url('other'),
+        'text'=>lang('other'),
+        'icon'=>'icon-wrench',
+        'tab'=> array (
+            'cache'=>array('url'=>url('other-cache'), 'text'=>lang('admin_other_cache')),
+        )
+    ),
+    'plugin' => array(
+        'url'=>url('plugin'),
+        'text'=>lang('plugin'),
+        'icon'=>'icon-cogs',
+        'tab'=> array (
+            'local'=>array('url'=>url('plugin-local'), 'text'=>lang('admin_plugin_local_list')),
+        )
+    )
 );
 
 ?>

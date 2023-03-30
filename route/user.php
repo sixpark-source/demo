@@ -136,7 +136,6 @@ if (empty($action)) {
 		// hook user_login_post_end.php
 
 		// 设置 token，下次自动登陆。
-
 		message(0, lang('user_login_successfully'));
 
 	}
@@ -145,10 +144,15 @@ if (empty($action)) {
     $auth_config = @include APP_PATH . 'conf/conf.auth.php';
 //用户授权
     $authorizeHostAry = parse_url($auth_config['authorize_route']);
+    $refer = $_SERVER['HTTP_REFERER'];
+    if(empty($refer))
+    {
+        $refer = "index.php";
+    }
     if (empty($authorizeHostAry['query'])) {
-        $authorizeUrl = $auth_config['authorize_route'] . "?response_type=code&client_id=" . $auth_config['client_id'] . "&state=abc";
+        $authorizeUrl = $auth_config['authorize_route'] . "?response_type=code&client_id=" . $auth_config['client_id'] . "&state=".urlencode($refer);
     } else {
-        $authorizeUrl = $auth_config['authorize_route'] . "&response_type=code&client_id=" . $auth_config['client_id'] . "&state=abc";
+        $authorizeUrl = $auth_config['authorize_route'] . "&response_type=code&client_id=" . $auth_config['client_id'] . "&state=".urlencode($refer);
     }
     header("Location:" . $authorizeUrl);
     exit;

@@ -3,7 +3,7 @@
 		<div class="row line-height-4">
 			<div class="col-md-2 col-sm-12 text-center">
 				<img class="logo-4" src="<?php echo $_user['avatar_url'];?>">
-				<br><b><?php echo $_user['username'];?> </b>
+				<br><b>留园联盟ID：<?php echo $_user['username'];?> </b>
 				<!--{hook user_profile_username_after.htm}-->
 				<?php
 			if($isSelf == 0){
@@ -43,12 +43,12 @@
 			</div>
 			<div class="col-4 col-sm-5">
 				<span class="text-muted">性别：</span><?=empty($_user['sex'])?'未知':$_user['sex']?>
-				<br><span class="text-muted">等级：</span><?php echo $_user['grade'];?>
+				<br><span class="text-muted">留园社区声望等级：</span><?php echo $_user['grade'];?>
 				<!--{hook user_profile_posts_after.htm}-->
 			</div>
 			<div class="col-auto">
-				<span class="text-muted">浏览数：</span><?php echo $_user['views'];?>
-				<br><span class="text-muted">评论数：</span><?php echo $_user['replies'];?>
+				<span class="text-muted">留园联盟网站总浏览数：</span><?php echo $_user['views'];?>
+				<br><span class="text-muted">留园联盟网站总评论数：</span><?php echo $_user['replies'];?>
 				<!--{hook user_profile_login_date_after.htm}-->
 			</div>
 
