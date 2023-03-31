@@ -8,6 +8,22 @@
 6. 使用域名访问这个web目录下的资源，默认情况下，系统会自动进入安装状态。
 <img src="https://github.com/sixpark-source/demo/blob/main/doc_resource/db.png">
 7. 完成安装，则系统自动进入网站。
+8. 后台地址是 您的网站路径加上/admin/   注意登录用户名和密码是您上面设置的用户名和密码
+
+#### 插件系统
+1. 目前系统开放了简单的插件系统，目前插件系统仅支持修改过的插件
+2. 插件文件存放在/plugin/目录下
+3. 首先需要使用管理员账号登录 
+4. 登录地址是你的网站访问地址加上/admin/目录，比如 https://www.demo.com/admin/
+5. 进入系统后，可以看到插件的入口
+   <img src="https://github.com/sixpark-source/demo/blob/main/doc_resource/admin.png">
+6. 点击进入插件，可以看到插件的列表，点安装就可以完成安装
+   <img src="https://github.com/sixpark-source/demo/blob/main/doc_resource/plugin_1.png">
+7. 如果不需要某个插件，则可以点卸载
+   <img src="https://github.com/sixpark-source/demo/blob/main/doc_resource/plugin_2.png">
+8. 一般情况下插件可以组合使用，但是主题类插件，不能组合使用，容易出现冲突
+9. 一般安装好插件后，清空缓存，前端就可以看到效果，如果出现冲突，直接卸载插件即可
+
 
 
 #### 模板修改指南
