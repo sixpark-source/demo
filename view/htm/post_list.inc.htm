@@ -18,7 +18,7 @@
 									<span class="username">
 										<a href="<?php echo url("user-$_post[uid]");?>" class="text-muted font-weight-bold"><?php echo $_post['username'];?></a>
 									</span>
-									<span class="date text-grey ml-2"><?php echo $_post['dateline'];?></span>
+									<span class="date text-grey ml-2"><?php echo date("Y-m-d G:i:s",$_post['dateline']);?></span>
 								</div>
 								<div class="text-right text-grey">
 									<a href="javascript:void(0)" data-tid="<?=$tid?>" data-pid="<?=$_post['rid']?>" class="text-grey post_reply mr-3"><i class="icon-reply" title="评论"></i> <span class="d-none">评论</span></a>
